@@ -1,24 +1,26 @@
 <script setup>
-  import Nav from './components/Nav.vue';
-  import Main from './components/Main.vue';
+  import { useRouter } from 'vue-router';
+
+  const router = useRouter();
+
+  router.beforeEach((to, from, next) => {
+    if (to.meta.requiresAuth && !isAuthenticated()) {
+      next('/login');
+    } else {
+      next();
+    }
+  });
+
+  function isAuthenticated() {
+    // Implement your authentication logic here
+    return false;
+  }
 </script>
 
 <template>
-  <Nav />
-  <Main />
+  <router-view></router-view>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+
 </style>
