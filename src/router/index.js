@@ -19,4 +19,17 @@ const router = createRouter({
   ]
 })
 
+router.beforeEach((to, from, next) => {
+  const isLoggedIn = !!localStorage.getItem('token')
+
+  if (to.meta.requiresAuth && !isLoggedIn) {
+    next({ name: 'Login' })
+  } else if (to.name === 'Login' && isLoggedIn) {
+    // voorkomt dat ingelogde gebruikers terug naar login gaan
+    next({ name: 'Dashboard' })
+  } else {
+    next()
+  }
+})
+
 export default router

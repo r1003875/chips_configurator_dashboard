@@ -1,11 +1,13 @@
 <script setup>
     import { ref } from 'vue';
+    import { useRouter } from 'vue-router';
 
+    const router = useRouter();
     const email = ref('');
     const password = ref('');
     const login = async () => {
-        try{
-            await fetch('http://localhost:3000/api/v1/users/login', {
+        try {
+            const response = await fetch('http://localhost:3000/api/v1/users/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -14,11 +16,19 @@
                     email: email.value,
                     password: password.value
                 })
-            })
-            .then(response => {return response.json()})
-            .then(data => {
-                console.log('Login attempt success:', data);
             });
+
+            const json = await response.json();
+
+            if (json.status === 'success') {
+                console.log('Login successful');
+                localStorage.setItem('token', json.token || 'logged-in')
+                router.push({ name: 'Dashboard' });
+            } else {
+                const alertBox = document.querySelector('.alert');
+                alertBox.textContent = json.message || 'Login failed';
+                alertBox.classList.remove('hidden');
+            }
         }
         catch(error){
             console.error('Error during login:', error);
@@ -48,7 +58,7 @@
     </div>
 </template>
 
-<style>
+<style scoped>
     * {box-sizing: border-box;}
     html { height: 100%; display: flex; }
 
