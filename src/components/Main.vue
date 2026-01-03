@@ -8,10 +8,8 @@
     // Fetch initial chat messages or perform setup
     const response = await fetch('http://localhost:3000/api/v1/bags');
     const data = await response.json();
-    console.log(data.data.bags);
     submissions.push(...data.data.bags);
     submissions.reverse();
-    console.log(submissions);
     });
 
     async function removeSubmission(id) {
