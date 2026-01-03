@@ -36,7 +36,7 @@ h2 {
 .submissions {
     margin: 0 2rem;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
     gap: 1rem;
 }
 
@@ -44,6 +44,9 @@ h2 {
     border: 1px solid #ccc;
     padding: 1rem;
     background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .remove_btn {
