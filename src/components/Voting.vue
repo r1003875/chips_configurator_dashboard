@@ -34,6 +34,21 @@
             console.error('Error during voting:', error);
         }
     }
+/*
+    const hasVoted = ref(false)
+    const votedBagId = ref(null)
+
+    onMounted(async () => {
+    const res = await fetch('http://localhost:3000/api/v1/votes/me', {
+        headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    })
+    const data = await res.json()
+
+    hasVoted.value = data.hasVoted
+    votedBagId.value = data.bagId
+    })*/
 </script>
 
 <template>

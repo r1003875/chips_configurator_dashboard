@@ -8,6 +8,7 @@
         },
     });
 
+    const hasVoted = ref(false);
     const emit = defineEmits(['vote']);
 
     //API call to get all votes for this submission using api/v1/votes?bag=submission._id
@@ -39,17 +40,48 @@
                 <img :src="submission.image" alt="chips image" width="200" />
             </div>
             <p>Bag Color: <span :style="{ color: submission.color }">{{ submission.color }}</span></p>
-            <p>Font: {{ submission.font }}</p>
             <p>Flavours: {{ submission.keyFlavours }}</p>
-            <p>User_id: {{ submission.user }}</p>
         </div>
         <div class="votes">
             <p>Votes: {{ votes }}</p>
         </div>
-        <div @click.prevent="emit('vote', submission._id); votes++" class="vote_btn" title="Vote for this submission?">Vote</div>
+        <button @click.prevent="emit('vote', submission._id); votes++; hasVoted = true;" :class="{ voted: hasVoted }" :disabled="hasVoted"; class="vote_btn" title="Vote for this submission?">{{ hasVoted ? 'Voted ✔' : 'Vote' }}</button>
     </div>
 </template>
 
 <style scoped>
+    .vote_btn {
+        background-color: #f8e503;
+        border: none;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        cursor: pointer;
+        border-radius: 4px;
+        color: black;
+        font-weight: bold;
+        margin-top: 1rem;
+        text-align: center;
+    }
 
+    .vote_btn:hover {
+        background-color: #d4b703;
+    }
+
+    .vote_btn.voted {
+        background-color: #3bd151;
+        border: none;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        cursor: pointer;
+        border-radius: 4px;
+        color: white;
+        font-weight: bold;
+        margin-top: 1rem;
+        text-align: center;
+        cursor: not-allowed;
+    }
+
+    .vote_btn.voted:hover {
+        background-color: #2fad41;
+    }
 </style>

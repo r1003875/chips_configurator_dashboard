@@ -70,19 +70,7 @@ p {
     background-color: #c21f1f;
 }
 
-.vote_btn {
-    background-color: #f8e503;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    cursor: pointer;
-    border-radius: 4px;
-    color: black;
+.votes{
     font-weight: bold;
-    margin-top: 1rem;
-    text-align: center;
-}
-
-.vote_btn:hover {
-    background-color: #d4b703;
+    margin-top: 0.5rem;
 }
