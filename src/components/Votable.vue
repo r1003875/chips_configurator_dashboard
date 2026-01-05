@@ -12,6 +12,7 @@
         }
     });
 
+    const justVoted = ref(false);
     const emit = defineEmits(['vote']);
 
     const votes = ref(0);
@@ -47,7 +48,7 @@
         <div class="votes">
             <p>Votes: {{ votes }}</p>
         </div>
-        <button @click.prevent="emit('vote', submission._id); votes++;" :class="{ voted: hasAlreadyVoted }" :disabled="hasAlreadyVoted" class="vote_btn" title="Vote for this submission?">{{ hasAlreadyVoted ? 'You already voted ✔' : 'Vote' }}</button>
+        <button @click.prevent="emit('vote', submission._id); votes++; justVoted = true;" :class="{ voted: hasAlreadyVoted || justVoted }" :disabled="hasAlreadyVoted || justVoted" class="vote_btn" title="Vote for this submission?">{{ hasAlreadyVoted || justVoted ? 'You already voted ✔' : 'Vote' }}</button>
     </div>
 </template>
 
