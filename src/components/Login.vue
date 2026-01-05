@@ -21,9 +21,12 @@
             const json = await response.json();
 
             if (json.status === 'success') {
-                console.log('Login successful');
                 sessionStorage.setItem('token', json.token || 'logged-in')
-                router.push({ name: 'Dashboard' });
+                if (json.isAdmin) {
+                    router.push({ name: 'Dashboard' });
+                } else {
+                    router.push({ name: 'Voting' });
+                }
             } else {
                 const alertBox = document.querySelector('.alert');
                 alertBox.textContent = json.message || 'Login failed';
