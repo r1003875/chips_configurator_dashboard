@@ -31,7 +31,11 @@ nav{
 
 h2 {
     margin-left: 2rem;
-}   
+} 
+
+p {
+    margin-left: 2rem;
+}
 
 .submissions {
     margin: 0 2rem;
@@ -64,4 +68,21 @@ h2 {
 
 .remove_btn:hover {
     background-color: #c21f1f;
+}
+
+.vote_btn {
+    background-color: #f8e503;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border-radius: 4px;
+    color: black;
+    font-weight: bold;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.vote_btn:hover {
+    background-color: #d4b703;
 }

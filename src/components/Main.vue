@@ -41,7 +41,7 @@
 </script>
 
 <template>
-    <h2>Submissions</h2>
+    <h2>Admin Dashboard</h2>
     <div class="submissions">
         <!-- Submission items will go here -->
         <Submission 

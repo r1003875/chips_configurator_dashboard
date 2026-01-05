@@ -6,6 +6,7 @@
     const logout = () => {
 
     sessionStorage.removeItem('token')
+    sessionStorage.removeItem('userId')
 
     router.push({ name: 'Login' })
 }
@@ -13,7 +14,7 @@
   
 <template>
     <nav>
-        <h1>Chips Configurator Dashboard</h1>
+        <h1>Chips Configurator</h1>
         <div @click="logout" class="btn">Log out ></div>
     </nav>
 </template>
