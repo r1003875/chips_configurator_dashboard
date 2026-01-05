@@ -2,12 +2,13 @@
     import { ref } from 'vue';
     import { useRouter } from 'vue-router';
 
+    const API_URL = import.meta.env.VITE_API_URL
     const router = useRouter();
     const email = ref('');
     const password = ref('');
     const login = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/v1/users/login', {
+            const response = await fetch(`${API_URL}/users/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

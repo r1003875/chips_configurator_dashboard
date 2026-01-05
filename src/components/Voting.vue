@@ -3,15 +3,17 @@
     import { onMounted, reactive, ref } from 'vue';
     import Votable from './Votable.vue';
 
+    const API_URL = import.meta.env.VITE_API_URL
+
     let submissions = reactive([]);
     let hasVoted = ref(false);
 
     onMounted(async() => {
-        const response = await fetch('http://localhost:3000/api/v1/bags');
+        const response = await fetch(`${API_URL}/bags`);
         const data = await response.json();
         submissions.push(...data.data.bags);
         submissions.reverse();
-        const voteResponse = await fetch(`http://localhost:3000/api/v1/votes/?user=${sessionStorage.getItem('userId')}`);
+        const voteResponse = await fetch(`${API_URL}/votes/?user=${sessionStorage.getItem('userId')}`);
         const voteData = await voteResponse.json();
         if (voteData.status === 'success' && voteData.data.votes.length > 0) {
             hasVoted.value = true;
@@ -20,7 +22,7 @@
 
     async function handleVote(bag_id) {
         try {
-            const response = await fetch(`http://localhost:3000/api/v1/votes`, {
+            const response = await fetch(`${API_URL}/votes`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

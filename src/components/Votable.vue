@@ -1,6 +1,8 @@
 <script setup>
     import { defineProps, onMounted, ref } from 'vue';
 
+    const API_URL = import.meta.env.VITE_API_URL
+
     const props = defineProps({
         submission: {
             type: Object,
@@ -18,7 +20,7 @@
     const votes = ref(0);
     onMounted(async() => {
         try {
-            const response = await fetch(`http://localhost:3000/api/v1/votes?bag=${props.submission._id}`);
+            const response = await fetch(`${API_URL}/votes?bag=${props.submission._id}`);
             const data = await response.json();
 
             if (data.status === 'success') {

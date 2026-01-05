@@ -3,10 +3,11 @@
     import {onMounted, reactive, ref} from 'vue';
 
     let submissions = reactive([]);
+    const API_URL = import.meta.env.VITE_API_URL
 
     onMounted(async() => {
     // Fetch initial chat messages or perform setup
-    const response = await fetch('http://localhost:3000/api/v1/bags');
+    const response = await fetch(`${API_URL}/bags`);
     const data = await response.json();
     submissions.push(...data.data.bags);
     submissions.reverse();
@@ -14,7 +15,7 @@
 
     async function removeSubmission(id) {
         try {
-            const response = await fetch(`http://localhost:3000/api/v1/bags/${id}`, {
+            const response = await fetch(`${API_URL}/bags/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
