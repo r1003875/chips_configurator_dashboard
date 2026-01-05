@@ -1,15 +1,21 @@
 <script setup>
     import Nav from './Nav.vue';
-    import { onMounted, reactive } from 'vue';
+    import { onMounted, reactive, ref } from 'vue';
     import Votable from './Votable.vue';
 
     let submissions = reactive([]);
+    let hasVoted = ref(false);
 
     onMounted(async() => {
         const response = await fetch('http://localhost:3000/api/v1/bags');
         const data = await response.json();
         submissions.push(...data.data.bags);
         submissions.reverse();
+        const voteResponse = await fetch(`http://localhost:3000/api/v1/votes/?user=${sessionStorage.getItem('userId')}`);
+        const voteData = await voteResponse.json();
+        if (voteData.status === 'success' && voteData.data.votes.length > 0) {
+            hasVoted.value = true;
+        }
     });
 
     async function handleVote(bag_id) {
@@ -34,21 +40,6 @@
             console.error('Error during voting:', error);
         }
     }
-/*
-    const hasVoted = ref(false)
-    const votedBagId = ref(null)
-
-    onMounted(async () => {
-    const res = await fetch('http://localhost:3000/api/v1/votes/me', {
-        headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-    })
-    const data = await res.json()
-
-    hasVoted.value = data.hasVoted
-    votedBagId.value = data.bagId
-    })*/
 </script>
 
 <template>
@@ -61,6 +52,7 @@
             :key="submission.id"
             :submission="submission"
             @vote="handleVote"
+            :hasAlreadyVoted="hasVoted"
         />
     </div>
 </template>

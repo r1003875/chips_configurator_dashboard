@@ -6,12 +6,14 @@
             type: Object,
             required: true
         },
+        hasAlreadyVoted: {
+            type: Boolean,
+            required: true
+        }
     });
 
-    const hasVoted = ref(false);
     const emit = defineEmits(['vote']);
 
-    //API call to get all votes for this submission using api/v1/votes?bag=submission._id
     const votes = ref(0);
     onMounted(async() => {
         try {
@@ -45,7 +47,7 @@
         <div class="votes">
             <p>Votes: {{ votes }}</p>
         </div>
-        <button @click.prevent="emit('vote', submission._id); votes++; hasVoted = true;" :class="{ voted: hasVoted }" :disabled="hasVoted"; class="vote_btn" title="Vote for this submission?">{{ hasVoted ? 'Voted ✔' : 'Vote' }}</button>
+        <button @click.prevent="emit('vote', submission._id); votes++;" :class="{ voted: hasAlreadyVoted }" :disabled="hasAlreadyVoted" class="vote_btn" title="Vote for this submission?">{{ hasAlreadyVoted ? 'You already voted ✔' : 'Vote' }}</button>
     </div>
 </template>
 
@@ -68,7 +70,7 @@
     }
 
     .vote_btn.voted {
-        background-color: #3bd151;
+        background-color: #adadad;
         border: none;
         padding: 0.5rem 1rem;
         font-size: 0.9rem;
@@ -82,6 +84,6 @@
     }
 
     .vote_btn.voted:hover {
-        background-color: #2fad41;
+        background-color: #969696;
     }
 </style>
