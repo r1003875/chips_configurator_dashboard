@@ -4,16 +4,20 @@
 
     const API_URL = import.meta.env.VITE_API_URL
     const router = useRouter();
+    const firstName = ref('');
+    const lastName = ref('');
     const email = ref('');
     const password = ref('');
     const login = async () => {
         try {
-            const response = await fetch(`${API_URL}/users/login`, {
+            const response = await fetch(`${API_URL}/users/signup`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
+                    firstName: firstName.value,
+                    lastName: lastName.value,
                     email: email.value,
                     password: password.value
                 })
@@ -31,12 +35,12 @@
                 }
             } else {
                 const alertBox = document.querySelector('.alert');
-                alertBox.textContent = json.message || 'Login failed';
+                alertBox.textContent = json.message || 'Sign up failed';
                 alertBox.classList.remove('hidden');
             }
         }
         catch(error){
-            console.error('Error during login:', error);
+            console.error('Error during signup:', error);
         }
     };
 </script>
@@ -50,6 +54,16 @@
             </div>
             <div class="signup">
                 <div>
+                <label for="firstName">First name</label>
+                <input type="text" v-model="firstName" class="input--text" name="firstName" id="firstName">
+                </div>
+
+                <div>
+                <label for="lastName">Last name</label>
+                <input type="text" v-model="lastName" class="input--text" name="lastName" id="lastName">
+                </div>
+
+                <div>
                 <label for="email">Email</label>
                 <input type="text" v-model="email" class="input--text" name="email" id="email">
                 </div>
@@ -61,7 +75,7 @@
                 
                 <button @click.prevent="login" class="btn btn--primary">Let's go</button>
             </div>
-            <p>No account? <router-link to="/signup">Sign up here</router-link></p>
+            <p>Already have an account? <router-link to="/login">Log in here</router-link></p>
         </div>
     </div>
 </template>
