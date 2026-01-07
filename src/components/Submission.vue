@@ -38,7 +38,7 @@
                 <p>Image:</p>
                 <img :src="submission.image" alt="chips image" width="200" />
             </div>
-            <p>Bag Color: <span :style="{ color: submission.color }">{{ submission.color }}</span></p>
+            <p>Bag Color: {{ submission.color }}<div class="color_display" :style="{ backgroundColor: submission.color }"></div></p>
             <p>Font: {{ submission.font }}</p>
             <p>Flavours: {{ submission.keyFlavours }}</p>
             <p>User_id: {{ submission.user }}</p>
