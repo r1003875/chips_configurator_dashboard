@@ -34,6 +34,7 @@
 
             if (json.status === 'success') {
                 console.log('Vote cast successfully');
+                hasVoted.value = true;
             } else {
                 console.error('Failed to cast vote:', json.message);
             }
