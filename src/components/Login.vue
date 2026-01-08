@@ -23,7 +23,6 @@
 
             if (json.status === 'success') {
                 sessionStorage.setItem('token', json.token || 'logged-in');
-                sessionStorage.setItem('userId', json.userId);
                 if (json.isAdmin) {
                     router.push({ name: 'Dashboard' });
                 } else {
