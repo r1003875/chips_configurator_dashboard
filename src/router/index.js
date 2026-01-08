@@ -7,18 +7,13 @@ import Signup from '../components/Signup.vue'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
+    { path: '/signup', name: 'Signup', component: Signup },
+    { path: '/login', name: 'Login', component: Login },
+
+    { path: '/', redirect: '/voting' },
+
     {
-      path: '/signup',
-      name: 'Signup',
-      component: Signup
-    },
-    {
-      path: '/login',
-      name: 'Login',
-      component: Login
-    },
-    {
-      path: '/',
+      path: '/dashboard',
       name: 'Dashboard',
       component: Dashboard,
       meta: { requiresAuth: true }
@@ -29,21 +24,24 @@ const router = createRouter({
       component: Voting,
       meta: { requiresAuth: true }
     },
+
     { path: '/:catchAll(.*)', redirect: '/voting' }
   ]
-})
+});
 
 router.beforeEach((to, from, next) => {
-  const isLoggedIn = !!sessionStorage.getItem('token')
+  const token = sessionStorage.getItem('token');
 
-  if (to.meta.requiresAuth && !isLoggedIn) {
-    next({ name: 'Login' })
-  } else if (to.name === 'Login' && isLoggedIn) {
-    // voorkomt dat ingelogde gebruikers terug naar login gaan
-    next({ name: 'Dashboard' })
-  } else {
-    next()
+  if (to.meta.requiresAuth && !token) {
+    return next('/login');
   }
-})
+
+  if (to.path === '/') {
+    const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
+    return next(isAdmin ? '/dashboard' : '/voting');
+  }
+
+  next();
+});
 
 export default router
