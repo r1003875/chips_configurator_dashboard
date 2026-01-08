@@ -29,6 +29,7 @@ const router = createRouter({
       component: Voting,
       meta: { requiresAuth: true }
     },
+    { path: '/:catchAll(.*)', redirect: '/voting' }
   ]
 })
 
