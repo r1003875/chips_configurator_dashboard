@@ -41,11 +41,12 @@
             <h3>{{ submission.name }}</h3>
             <h4>Details:</h4>
             <div>
-                <p>Image:</p>
-                <img :src="submission.image" alt="chips image" width="200" />
+                <img :src="submission.screenshot" alt="bag screenshot" width="200" />
             </div>
-            <p>Bag Color: {{ submission.color }}<div class="color_display" :style="{ backgroundColor: submission.color }"></div></p>
-            <p>Flavours: {{ submission.keyFlavours }}</p>
+            <h4>Flavours:</h4>
+            <ul>
+                <li v-for="(flavour, index) in submission.keyFlavours" :key="index">{{ flavour }}</li>
+            </ul>
         </div>
         <div class="votes">
             <p>Votes: {{ votes }}</p>
