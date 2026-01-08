@@ -26,27 +26,31 @@
     });
 
     async function handleVote(bag_id) {
-        try {
-            const response = await fetch(`${API_URL}/votes`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ user: sessionStorage.getItem('userId'), bag: bag_id })
-            });
+    try {
+        const token = sessionStorage.getItem("token");
 
-            const json = await response.json();
+        const response = await fetch(`${API_URL}/votes`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}` 
+        },
+        body: JSON.stringify({
+            bag: bag_id 
+        })
+        });
 
-            if (json.status === 'success') {
-                console.log('Vote cast successfully');
-                hasVoted.value = true;
-            } else {
-                console.error('Failed to cast vote:', json.message);
-            }
+        const json = await response.json();
+
+        if (json.status === "success") {
+        console.log("Vote cast successfully");
+        hasVoted.value = true;
+        } else {
+        console.error("Failed to cast vote:", json.message);
         }
-        catch(error){
-            console.error('Error during voting:', error);
-        }
+    } catch (error) {
+        console.error("Error during voting:", error);
+    }
     }
 </script>
 
