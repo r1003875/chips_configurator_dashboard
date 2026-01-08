@@ -9,11 +9,16 @@
     let hasVoted = ref(false);
 
     onMounted(async() => {
+        const token = sessionStorage.getItem('token');
         const response = await fetch(`${API_URL}/bags`);
         const data = await response.json();
         submissions.push(...data.data.bags);
         submissions.reverse();
-        const voteResponse = await fetch(`${API_URL}/votes/?user=${sessionStorage.getItem('userId')}`);
+        const voteResponse = await fetch(`${API_URL}/votes/me`, {
+            headers: {
+            Authorization: `Bearer ${token}`
+            }
+        });
         const voteData = await voteResponse.json();
         if (voteData.status === 'success' && voteData.data.votes.length > 0) {
             hasVoted.value = true;
