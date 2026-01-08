@@ -13,7 +13,7 @@
         router.push({ name: 'Login' })
     }
     const token = sessionStorage.getItem('token');
-    const configuratorLink = ref(`${CONFIG_URL}?token=${token}`)
+    const configuratorLink = ref(`${CONFIG_URL}/?token=${token}`)
 </script>
   
 <template>
